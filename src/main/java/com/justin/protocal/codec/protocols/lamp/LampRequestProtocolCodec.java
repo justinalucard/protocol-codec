@@ -33,11 +33,10 @@ public class LampRequestProtocolCodec extends ProtocolCodec<LampRequestProtocol>
     }
 
     public static void main(String[] args) {
+
         LampRequestProtocolCodec serializer = LampRequestProtocolCodec.create(LampColorEnum.RAINBOW, 3);
 
         LampRequestProtocolCodec lampRequestProtocolCodec = new LampRequestProtocolCodec(serializer.getBytes());
-
-
 
 
         System.out.println(serializer.getHexString());

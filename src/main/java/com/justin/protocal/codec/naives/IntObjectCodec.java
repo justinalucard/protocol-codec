@@ -1,6 +1,6 @@
 package com.justin.protocal.codec.naives;
 
-import com.justin.protocal.codec.core.ProtocolCodec;
+import com.justin.protocal.codec.core.ObjectCodec;
 import com.justin.protocal.codec.core.ProtocolFragment;
 import com.justin.protocal.codec.utils.ConverterUtils;
 
@@ -11,19 +11,19 @@ import java.util.Arrays;
 /**
  * 高位在前的整数编解码器
  */
-public class IntProtocolCodec extends ProtocolCodec<Integer> {
+public class IntObjectCodec extends ObjectCodec<Integer> {
 
 
 
-    public IntProtocolCodec(byte[] bytes) {
+    public IntObjectCodec(byte[] bytes) {
         super(bytes);
     }
 
-    public IntProtocolCodec(String hexString) {
+    public IntObjectCodec(String hexString) {
         super(hexString);
     }
 
-    public IntProtocolCodec(Integer integer) {
+    public IntObjectCodec(Integer integer) {
         super(integer);
     }
 
@@ -44,11 +44,11 @@ public class IntProtocolCodec extends ProtocolCodec<Integer> {
 
 
     public static void main(String[] args) {
-        IntProtocolCodec intProtocolNode = new IntProtocolCodec("FFFF");
+        IntObjectCodec intProtocolNode = new IntObjectCodec("FFFF");
         System.out.println(intProtocolNode.getValue());
         System.out.println(intProtocolNode.getHexString());
         System.out.println(Arrays.toString(intProtocolNode.getBytes()));
-        IntProtocolCodec intProtocolNode2 = new IntProtocolCodec(65535);
+        IntObjectCodec intProtocolNode2 = new IntObjectCodec(65535);
         System.out.println(intProtocolNode2.getHexString());
         System.out.println(Arrays.toString(intProtocolNode2.getBytes()));
         System.out.println(intProtocolNode2.getValue());

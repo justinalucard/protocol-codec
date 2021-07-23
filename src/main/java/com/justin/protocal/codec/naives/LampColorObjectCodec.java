@@ -1,7 +1,7 @@
 package com.justin.protocal.codec.naives;
 
 import com.justin.protocal.codec.core.ProtocolFragment;
-import com.justin.protocal.codec.core.ProtocolCodec;
+import com.justin.protocal.codec.core.ObjectCodec;
 import com.justin.protocal.codec.exceptions.IllegalProtocolException;
 import com.justin.protocal.codec.enums.LampColorEnum;
 import com.justin.protocal.codec.utils.ConverterUtils;
@@ -13,18 +13,18 @@ import java.util.Optional;
 /**
  * 变灯枚举的编解码器
  */
-public class LampColorProtocolCodec extends ProtocolCodec<LampColorEnum> {
+public class LampColorObjectCodec extends ObjectCodec<LampColorEnum> {
 
 
-    public LampColorProtocolCodec(byte[] bytes) {
+    public LampColorObjectCodec(byte[] bytes) {
         super(bytes);
     }
 
-    public LampColorProtocolCodec(String hexString) {
+    public LampColorObjectCodec(String hexString) {
         super(hexString);
     }
 
-    public LampColorProtocolCodec(LampColorEnum lampColorEnum) {
+    public LampColorObjectCodec(LampColorEnum lampColorEnum) {
         super(lampColorEnum);
     }
 

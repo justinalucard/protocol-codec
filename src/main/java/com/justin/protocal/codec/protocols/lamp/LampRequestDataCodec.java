@@ -1,5 +1,6 @@
 package com.justin.protocal.codec.protocols.lamp;
 
+import com.justin.protocal.codec.core.ObjectCodec;
 import com.justin.protocal.codec.core.ProtocolCodec;
 import com.justin.protocal.codec.enums.LampColorEnum;
 

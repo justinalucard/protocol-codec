@@ -1,9 +1,10 @@
 package com.justin.protocal.codec.annotations;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import com.justin.protocal.codec.protocols.DeserializeLengthDetermination;
+import com.justin.protocal.codec.protocols.SerializeLengthDetermination;
+
+import javax.xml.bind.annotation.XmlType;
+import java.lang.annotation.*;
 
 /**
  * 协议标记用的注解，每个协议组成部分，都必须使用该注解
@@ -32,11 +33,14 @@ public @interface Protocol {
      * 由于协议中Data部分的长度，一般都无法确定。序列化时用来确定这不确定的data域的长度
      * @return
      */
-    Class<?> serializeLengthDetermination() default Void.class;
+    Class<? extends SerializeLengthDetermination> serializeLengthDetermination() default SerializeLengthDetermination.class;
 
     /**
      * 与{@link Protocol#serializeLengthDetermination()}同理
      * @return
      */
-    Class<?> deserializeLengthDetermination() default Void.class;
+    Class<? extends DeserializeLengthDetermination> deserializeLengthDetermination() default DeserializeLengthDetermination.class;
+
+    boolean isGenericData() default false;
+
 }

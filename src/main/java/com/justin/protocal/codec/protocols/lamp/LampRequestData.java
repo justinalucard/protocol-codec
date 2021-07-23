@@ -4,8 +4,8 @@ import com.justin.protocal.codec.annotations.Protocol;
 import com.justin.protocal.codec.core.ProtocolFragment;
 import com.justin.protocal.codec.enums.LampColorEnum;
 import com.justin.protocal.codec.exceptions.IllegalProtocolException;
-import com.justin.protocal.codec.naives.IntProtocolCodec;
-import com.justin.protocal.codec.naives.LampColorProtocolCodec;
+import com.justin.protocal.codec.naives.IntObjectCodec;
+import com.justin.protocal.codec.naives.LampColorObjectCodec;
 
 /**
  * 变灯请求Data域的数据实体
@@ -13,13 +13,13 @@ import com.justin.protocal.codec.naives.LampColorProtocolCodec;
 public class LampRequestData extends ProtocolFragment{
 
     @Protocol(order = 1, length = 1)
-    LampColorProtocolCodec LampColor;
+    LampColorObjectCodec LampColor;
     @Protocol(order = 2, length = 1)
-    IntProtocolCodec lightingCount;
+    IntObjectCodec lightingCount;
 
     public LampRequestData(LampColorEnum lampColor, int lightingCount) {
-        this.setLampColor(new LampColorProtocolCodec(lampColor));
-        this.setLightingCount(new IntProtocolCodec(lightingCount));
+        this.setLampColor(new LampColorObjectCodec(lampColor));
+        this.setLightingCount(new IntObjectCodec(lightingCount));
     }
 
     public LampRequestData(byte[] bytes) {
@@ -30,19 +30,19 @@ public class LampRequestData extends ProtocolFragment{
         super(hexString);
     }
 
-    public LampColorProtocolCodec getLampColor() {
+    public LampColorObjectCodec getLampColor() {
         return LampColor;
     }
 
-    public void setLampColor(LampColorProtocolCodec lampColor) {
+    public void setLampColor(LampColorObjectCodec lampColor) {
         LampColor = lampColor;
     }
 
-    public IntProtocolCodec getLightingCount() {
+    public IntObjectCodec getLightingCount() {
         return lightingCount;
     }
 
-    public void setLightingCount(IntProtocolCodec lightingCount) {
+    public void setLightingCount(IntObjectCodec lightingCount) {
         if(lightingCount.getValue() < 1 || lightingCount.getValue() > 5){
             throw new IllegalProtocolException("亮灯数量只能为1-5，当前：" + lightingCount);
         }

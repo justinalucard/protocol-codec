@@ -2,12 +2,17 @@ package com.justin.protocal.codec.core;
 
 
 import com.justin.protocal.codec.annotations.Protocol;
-import com.justin.protocal.codec.naives.IntProtocolCodec;
+import com.justin.protocal.codec.naives.IntObjectCodec;
+import com.justin.protocal.codec.protocols.DeserializeLengthDetermination;
+import com.justin.protocal.codec.protocols.LengthField;
+import com.justin.protocal.codec.protocols.SerializeLengthDetermination;
+import com.justin.protocal.codec.protocols.lamp.LampRequestData;
+import com.justin.protocal.codec.protocols.lamp.LampRequestDataCodec;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
-
 import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
 import java.util.*;
 
 /**
@@ -15,65 +20,59 @@ import java.util.*;
  * 增加了{@link ProtocolCodec#value}和对value的通用编码{@link ProtocolCodec#serialize()}解码{@link ProtocolCodec#deserialize()}实现
  * @param <T>
  */
-public abstract class ProtocolCodec<T> extends ProtocolFragment {
+public abstract class ProtocolCodec<ProtocolData extends ProtocolFragment> extends ObjectCodec<ProtocolData> {
     public ProtocolCodec(byte[] bytes) {
         this(bytes, null);
     }
 
     public ProtocolCodec(byte[] bytes, Class<?> tClass) {
-        super(bytes);
-        this.tClass = tClass;
-        this.setValue(this.deserialize());
+        super(bytes, tClass);
     }
 
     public ProtocolCodec(String hexString) {
         super(hexString);
-        this.setValue(this.deserialize());
     }
 
 
-    public ProtocolCodec(T t, Class<?> tClass) {
-        super();
-        this.tClass = tClass;
-        this.setValue(t);
-        this.setBytes(this.serialize().getBytes());
+    public ProtocolCodec(ProtocolData protocolData, Class<?> tClass) {
+        super(protocolData, tClass);
+        this.getValue().setBytes(this.getBytes());
     }
 
-    public ProtocolCodec(T t) {
-        this(t, null);
+    public ProtocolCodec(ProtocolData protocolData) {
+        this(protocolData, null);
     }
 
     public ProtocolCodec(Class<?> tClass) {
-        this.tClass = tClass;
+        super(tClass);
     }
 
-    private Class<?> tClass;
-
-    private T value;
-
-    public T getValue() {
-        return value;
-    }
-
-    public void setValue(T value) {
-        this.value = value;
-    }
-
-    @Override
-    public void setBytes(byte[] bytes) {
-        super.setBytes(bytes);
-    }
+//
+//    private ProtocolData value;
+//
+//    public ProtocolData getValue() {
+//        return value;
+//    }
+//
+//    public void setValue(ProtocolData value) {
+//        this.value = value;
+//    }
+//
+//    @Override
+//    public void setBytes(byte[] bytes) {
+//        super.setBytes(bytes);
+//    }
 
     /**
      * 根据{@link Protocol}注解进行通用解码
      * @return
      */
     @SuppressWarnings("all")
-    protected T deserialize() {
+    protected ProtocolData deserialize() {
         Map<Protocol, Field> protocolDefines = getProtocolDefine();
 
         try {
-            T ret = (T) tClass.getConstructor(byte[].class).newInstance((Object) this.getBytes());
+            ProtocolData ret = (ProtocolData) tClass.getConstructor(byte[].class).newInstance((Object) this.getBytes());
             int byteOffset = 0;
             int lengthFieldLength = 0;
             for (Map.Entry<Protocol, Field> protocolDefine : protocolDefines.entrySet()) {
@@ -85,13 +84,19 @@ public abstract class ProtocolCodec<T> extends ProtocolFragment {
 //                Constructor<?> constructor = protocolDefine.getValue().getType().getConstructor(byteSegments.getClass(), protocolDefine.getValue().getType());
 //                if(constructor == null)
 
-                Constructor<?> constructor = protocolDefine.getValue().getType().getConstructor(byteSegments.getClass());
+                Constructor<?> constructor;
 
+                if(protocolDefine.getKey().isGenericData()){
+                    constructor = ((Class)((ParameterizedType)tClass.getGenericSuperclass()).getActualTypeArguments()[0]).getConstructor(byteSegments.getClass());
+                }
+                else {
+                    constructor = protocolDefine.getValue().getType().getConstructor(byteSegments.getClass());
+                }
                 Object newInstance = constructor.newInstance((Object) byteSegments);
                 protocolDefine.getValue().set(ret, newInstance);
 
                 if(protocolDefine.getKey().isLengthField()){
-                    lengthFieldLength = ((IntProtocolCodec)newInstance).getValue();
+                    lengthFieldLength = ((IntObjectCodec)newInstance).getValue();
                 }
 
                 byteOffset += currentLength;
@@ -108,7 +113,7 @@ public abstract class ProtocolCodec<T> extends ProtocolFragment {
      * 解码后调用，一般用于解码后进行校验位比对验证，这里默认空方法，子类需要的时候，override即可
      * @param ret
      */
-    protected void afterDeserialize(T ret){
+    protected void afterDeserialize(ProtocolData ret){
 
     }
 
@@ -118,10 +123,13 @@ public abstract class ProtocolCodec<T> extends ProtocolFragment {
      */
     protected ProtocolFragment serialize() {
         Map<Protocol, Field> protocolDefines = getProtocolDefine();
+        if(!tClass.isAssignableFrom(ProtocolFragment.class)){
+
+        }
         try {
             byte[] result = new byte[]{};
             for (Map.Entry<Protocol, Field> protocolDefine : protocolDefines.entrySet()) {
-                ProtocolFragment fragment = (ProtocolFragment) protocolDefine.getValue().get(value);
+                ProtocolFragment fragment = (ProtocolFragment) protocolDefine.getValue().get(getValue());
 
 //                if (fragment == null && protocolDefine.getKey().valueCalculator() != Void.class) {
 //                    fragment = new IntProtocolCodec(3);
@@ -151,20 +159,13 @@ public abstract class ProtocolCodec<T> extends ProtocolFragment {
     private int getDefinedLength(Map.Entry<Protocol, Field> protocolDefine, Integer lengthFieldLength) throws InstantiationException, IllegalAccessException, java.lang.reflect.InvocationTargetException, NoSuchMethodException {
         int length = protocolDefine.getKey().length();
 
-        if (protocolDefine.getKey().serializeLengthDetermination() != Void.class) {
-            if(value != null) { //serialize
-//                Object o = protocolDefine.getKey().serializeLengthCalculator().getConstructor(value.getClass()).newInstance(value);
-                Object o = protocolDefine.getKey().serializeLengthDetermination().getConstructors()[0].newInstance(value);
-
-                Method method = o.getClass().getMethod("getLength", (Class<?>[]) null);
-                Object invoke = method.invoke(o, (Object[]) null);
-                return (int) invoke;
-            }else if(protocolDefine.getKey().deserializeLengthDetermination() != Void.class){ //deserialize
-
-                Object o = protocolDefine.getKey().deserializeLengthDetermination().getConstructor().newInstance();
-                Method method = o.getClass().getMethod("getLength", int.class);
-                Object invoke = method.invoke(o, lengthFieldLength);
-                return (int) invoke;
+        if (protocolDefine.getKey().serializeLengthDetermination() != SerializeLengthDetermination.class) {
+            if(getValue() != null && getValue() instanceof LengthField) { //serialize
+                SerializeLengthDetermination o = protocolDefine.getKey().serializeLengthDetermination().getConstructor().newInstance();
+                return o.getLength((LengthField) getValue());
+            }else if(protocolDefine.getKey().deserializeLengthDetermination() != DeserializeLengthDetermination.class){ //deserialize
+                DeserializeLengthDetermination o = protocolDefine.getKey().deserializeLengthDetermination().getConstructor().newInstance();
+                return o.getLength(lengthFieldLength);
             }
         }
 
@@ -179,7 +180,7 @@ public abstract class ProtocolCodec<T> extends ProtocolFragment {
     protected Map<Protocol, Field> getProtocolDefine() {
         Class<?> clazz = tClass;
         Field[] fields = clazz.getFields();
-        fields = concat(fields, clazz.getDeclaredFields());
+        fields = concat(concat(fields, clazz.getDeclaredFields()), clazz.getSuperclass().getDeclaredFields());
         Map<Protocol, Field> annotations = new HashMap<>();
         for (Field field : fields) {
             Protocol annotation = field.getAnnotation(Protocol.class);
