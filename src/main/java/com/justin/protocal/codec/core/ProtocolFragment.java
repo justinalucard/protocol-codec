@@ -1,6 +1,8 @@
 package com.justin.protocal.codec.core;
 
 
+import com.justin.protocal.codec.utils.BufferUtils;
+
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -14,15 +16,23 @@ public class ProtocolFragment {
 
 
     public ProtocolFragment(byte[] bytes) {
-        this.setBytes(bytes);
+        fromBytes(bytes);
     }
 
     public ProtocolFragment(String hexString) {
-        this.setHexString(hexString);
+        fromHexString(hexString);
     }
 
     public ProtocolFragment() {
 
+    }
+
+    protected void fromBytes(byte[] bytes) {
+        this.setBytes(bytes);
+    }
+
+    protected void fromHexString(String hexString){
+        this.setHexString(hexString);
     }
 
     public byte[] getBytes() {
@@ -31,7 +41,7 @@ public class ProtocolFragment {
 
     public void setBytes(byte[] bytes) {
         this.bytes = bytes;
-        this.hexString = ProtocolFragment.bytesToHex(bytes);
+        this.hexString = BufferUtils.bytesToHex(bytes);
     }
 
     public String getHexString() {
@@ -40,49 +50,13 @@ public class ProtocolFragment {
 
     public void setHexString(String hexString) {
         this.hexString = hexString;
-        this.bytes = ProtocolFragment.hexToByteArray(hexString);
+        this.bytes = BufferUtils.hexToByteArray(hexString);
     }
 
-    private static String bytesToHex(byte[] bytes) {
-        StringBuilder sb = new StringBuilder();
-        for (byte aByte : bytes) {
-            String hex = Integer.toHexString(aByte & 0xFF);
-            if (hex.length() < 2) {
-                sb.append(0);
-            }
-            sb.append(hex);
-        }
-        return sb.toString();
-    }
-
-    public static byte[] hexToByteArray(String inHex) {
-        int hexlen = inHex.length();
-        byte[] result;
-        if (hexlen % 2 == 1) {
-            //奇数
-            hexlen++;
-            result = new byte[(hexlen / 2)];
-            inHex = "0" + inHex;
-        } else {
-            //偶数
-            result = new byte[(hexlen / 2)];
-        }
-        int j = 0;
-        for (int i = 0; i < hexlen; i += 2) {
-            result[j] = hexToByte(inHex.substring(i, i + 2));
-            j++;
-        }
-        return result;
-    }
-
-
-    public static byte hexToByte(String inHex) {
-        return (byte) Integer.parseInt(inHex, 16);
-    }
 
     /**
      * 打印美观化
-     * @return
+     * @return 输出协议内容
      */
     @Override
     public String toString() {
@@ -94,8 +68,8 @@ public class ProtocolFragment {
 
     /**
      * 修改equals方法，只要byte[]和十六进制字符串一致，即认为相等
-     * @param o
-     * @return
+     * @param o 需要比较的对象
+     * @return 是否相等
      */
     @Override
     public boolean equals(Object o) {

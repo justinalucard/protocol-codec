@@ -16,28 +16,27 @@ public class IntObjectCodec extends ObjectCodec<Integer> {
 
 
     public IntObjectCodec(byte[] bytes) {
-        super(bytes);
+        super(bytes, Integer.class);
     }
 
     public IntObjectCodec(String hexString) {
-        super(hexString);
+        super(hexString, Integer.class);
     }
 
     public IntObjectCodec(Integer integer) {
-        super(integer);
+        super(integer, Integer.class);
     }
 
     @Override
     protected Integer deserialize() {
         byte[] bytes = getBytes();
-
-        return ConverterUtils.byteArrayToInt(bytes);
+        return ConverterUtils.getInt(bytes);
     }
 
     @Override
     protected ProtocolFragment serialize() {
         if(this.getValue() != null){
-            return new ProtocolFragment(ConverterUtils.intToByteArray(this.getValue()));
+            return new ProtocolFragment(ConverterUtils.getBytes(this.getValue()));
         }
         return null;
     }

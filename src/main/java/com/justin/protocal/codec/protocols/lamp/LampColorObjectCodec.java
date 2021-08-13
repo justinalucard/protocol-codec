@@ -1,4 +1,4 @@
-package com.justin.protocal.codec.naives;
+package com.justin.protocal.codec.protocols.lamp;
 
 import com.justin.protocal.codec.core.ProtocolFragment;
 import com.justin.protocal.codec.core.ObjectCodec;
@@ -17,21 +17,21 @@ public class LampColorObjectCodec extends ObjectCodec<LampColorEnum> {
 
 
     public LampColorObjectCodec(byte[] bytes) {
-        super(bytes);
+        super(bytes, LampColorEnum.class);
     }
 
     public LampColorObjectCodec(String hexString) {
-        super(hexString);
+        super(hexString, LampColorEnum.class);
     }
 
     public LampColorObjectCodec(LampColorEnum lampColorEnum) {
-        super(lampColorEnum);
+        super(lampColorEnum, LampColorEnum.class);
     }
 
     @Override
     protected LampColorEnum deserialize() {
         byte[] bytes = getBytes();
-        int color = ConverterUtils.byteArrayToInt(bytes);
+        int color = ConverterUtils.getInt(bytes);
         Optional<LampColorEnum> lampColor =
                 Arrays.stream(LampColorEnum.values())
                         .filter(x -> x.getCode() == color)
@@ -44,7 +44,7 @@ public class LampColorObjectCodec extends ObjectCodec<LampColorEnum> {
     @Override
     protected ProtocolFragment serialize() {
         if(this.getValue() != null){
-            return new ProtocolFragment(ConverterUtils.intToByteArray(this.getValue().getCode()));
+            return new ProtocolFragment(ConverterUtils.getBytes(this.getValue().getCode()));
         }
         return null;
     }

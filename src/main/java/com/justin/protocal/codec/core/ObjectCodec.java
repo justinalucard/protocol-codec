@@ -16,35 +16,50 @@ import java.util.*;
  * @param <T>
  */
 public abstract class ObjectCodec<T> extends ProtocolFragment {
-    public ObjectCodec(byte[] bytes) {
-        this(bytes, null);
-    }
+
+    protected ObjectCodec(){}
+
 
     public ObjectCodec(byte[] bytes, Class<?> tClass) {
-        super(bytes);
         this.tClass = tClass;
-        this.setValue(this.deserialize());
+        fromBytes(bytes);
     }
 
-    public ObjectCodec(String hexString) {
-        super(hexString);
-        this.setValue(this.deserialize());
-    }
-
-
-    public ObjectCodec(T t, Class<?> tClass) {
-        super();
+    public ObjectCodec(String hexString, Class<?> tClass) {
         this.tClass = tClass;
-        this.setValue(t);
-        this.setBytes(this.serialize().getBytes());
+        fromHexString(hexString);
     }
 
-    public ObjectCodec(T t) {
-        this(t, null);
+
+
+    public ObjectCodec(T value, Class<?> tClass) {
+        this.tClass = tClass;
+        fromValue(value);
     }
+
+
 
     public ObjectCodec(Class<?> tClass) {
         this.tClass = tClass;
+    }
+
+
+
+    @Override
+    protected void fromBytes(byte[] bytes) {
+        super.fromBytes(bytes);
+        this.setValue(this.deserialize());
+    }
+
+    @Override
+    protected void fromHexString(String hexString) {
+        super.fromHexString(hexString);
+        this.setValue(this.deserialize());
+    }
+
+    protected void fromValue(T value){
+        this.setValue(value);
+        this.setBytes(this.serialize().getBytes());
     }
 
     protected Class<?> tClass;
@@ -73,9 +88,9 @@ public abstract class ObjectCodec<T> extends ProtocolFragment {
 
     /**
      * 解码后调用，一般用于解码后进行校验位比对验证，这里默认空方法，子类需要的时候，override即可
-     * @param ret
+     * @param t 数据体
      */
-    protected void afterDeserialize(T ret){
+    protected void afterDeserialize(T t){
 
     }
 

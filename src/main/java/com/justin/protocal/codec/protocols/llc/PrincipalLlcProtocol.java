@@ -1,20 +1,19 @@
-package com.justin.protocal.codec.protocols;
+package com.justin.protocal.codec.protocols.llc;
 
 import com.justin.protocal.codec.annotations.Protocol;
 import com.justin.protocal.codec.core.ProtocolFragment;
 import com.justin.protocal.codec.naives.IntObjectCodec;
+import com.justin.protocal.codec.protocols.LengthField;
 import com.justin.protocal.codec.utils.CheckSumUtils;
 
-import java.lang.annotation.Repeatable;
-
-public class PrincipalProtocol<DataCodec extends  ProtocolFragment> extends ProtocolFragment implements LengthField {
+public class PrincipalLlcProtocol<DataCodec extends  ProtocolFragment> extends ProtocolFragment implements LengthField {
     @Protocol(order = 0, length = 2)
     ProtocolFragment begin = new ProtocolFragment("AA55");
     @Protocol(order = 1, length = 2, isLengthField = true)
     IntObjectCodec length;
     @Protocol(order = 2, length = 1)
     ProtocolFragment command = new ProtocolFragment("90");
-    @Protocol(order = 3, isGenericData = true, serializeLengthDetermination = SerializeRequestDataLengthCalculator.class, deserializeLengthDetermination = DeserializeRequestLengthCalculator.class)
+    @Protocol(order = 3, isGenericData = true, serializeLengthDetermination = LlcSerializeRequestDataLengthCalculator.class, deserializeLengthDetermination = LlcDeserializeRequestLengthCalculator.class)
     DataCodec data;
     @Protocol(order = 4, length = 1)
     ProtocolFragment check;
@@ -70,7 +69,7 @@ public class PrincipalProtocol<DataCodec extends  ProtocolFragment> extends Prot
     }
 
 
-    public PrincipalProtocol(DataCodec codec, String commandHex) {
+    public PrincipalLlcProtocol(DataCodec codec, String commandHex) {
         setCommand(new ProtocolFragment(commandHex));
         setData(codec);
         setLength(new IntObjectCodec(data.getBytes().length + command.getBytes().length));
@@ -79,10 +78,10 @@ public class PrincipalProtocol<DataCodec extends  ProtocolFragment> extends Prot
 
 
 
-    public PrincipalProtocol(byte[] bytes){
+    public PrincipalLlcProtocol(byte[] bytes){
         super(bytes);
     }
-    public PrincipalProtocol(String hexString){
+    public PrincipalLlcProtocol(String hexString){
         super(hexString);
     }
 }

@@ -5,7 +5,6 @@ import com.justin.protocal.codec.core.ProtocolFragment;
 import com.justin.protocal.codec.enums.LampColorEnum;
 import com.justin.protocal.codec.exceptions.IllegalProtocolException;
 import com.justin.protocal.codec.naives.IntObjectCodec;
-import com.justin.protocal.codec.naives.LampColorObjectCodec;
 
 /**
  * 变灯请求Data域的数据实体
