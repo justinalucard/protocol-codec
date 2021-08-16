@@ -23,6 +23,7 @@ public class T905Test {
         System.out.println(codec);
         System.out.println(codec.getValue().getIsuId().getValue());
 
+        byte[] bytes1 = new byte[]{126, -128, 1, 0, 13, 16, 18, 52, 86, 120, -112, 0, 100, 0, 1, 0, 2, 3, 30, 126};
 
         T8001Protocol.Codec codec2 = new T8001Protocol.Codec(codec.getBytes());
         System.out.println(codec2.getValue().getIsuId().getValue());
@@ -70,9 +71,9 @@ public class T905Test {
             }
 
             public Data(int responseMessageSerialNo, int responseMessageId, int result) {
-                this.setResponseMessageSerialNo(new UInt16ObjectCodec(responseMessageSerialNo));
-                this.setResponseMessageId(new UInt16ObjectCodec(responseMessageId));
-                this.setResult(new UInt8ObjectCodec(result));
+                this.responseMessageSerialNo = new UInt16ObjectCodec(responseMessageSerialNo);
+                this.responseMessageId = new UInt16ObjectCodec(responseMessageId);
+                this.result = new UInt8ObjectCodec(result);
             }
 
             @Protocol(order = 0, length = 2)
@@ -86,24 +87,12 @@ public class T905Test {
                 return responseMessageSerialNo;
             }
 
-            public void setResponseMessageSerialNo(UInt16ObjectCodec responseMessageSerialNo) {
-                this.responseMessageSerialNo = responseMessageSerialNo;
-            }
-
             public UInt16ObjectCodec getResponseMessageId() {
                 return responseMessageId;
             }
 
-            public void setResponseMessageId(UInt16ObjectCodec responseMessageId) {
-                this.responseMessageId = responseMessageId;
-            }
-
             public UInt8ObjectCodec getResult() {
                 return result;
-            }
-
-            public void setResult(UInt8ObjectCodec result) {
-                this.result = result;
             }
 
             public static class Codec extends ProtocolCodec<Data>{
