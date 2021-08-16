@@ -4,6 +4,7 @@ import com.justin.protocal.codec.core.ProtocolFragment;
 import com.justin.protocal.codec.naives.UInt16ObjectCodec;
 import com.justin.protocal.codec.naives.UInt8ObjectCodec;
 import com.justin.protocal.codec.protocols.t905.PrincipalT905Protocol;
+import com.justin.protocal.codec.protocols.t905.PrincipalT905ProtocolCodec;
 import org.junit.Test;
 
 public class T905Test {
@@ -17,8 +18,6 @@ public class T905Test {
 
         T8001Protocol.Data data = new T8001Protocol.Data(1, 2, 3);
         T8001Protocol.Data.Codec dataCodec = new T8001Protocol.Data.Codec(data);
-        System.out.println(dataCodec);
-        System.out.println(dataCodec.getValue().getResponseMessageId().getValue());
         T8001Protocol t8001Protocol = new T8001Protocol("101234567890", 100, dataCodec);
         T8001Protocol.Codec codec = new T8001Protocol.Codec(t8001Protocol);
         System.out.println(codec);
@@ -46,7 +45,7 @@ public class T905Test {
             super(hexString);
         }
 
-        public static class Codec extends ProtocolCodec<T8001Protocol>{
+        public static class Codec extends PrincipalT905ProtocolCodec<T8001Protocol> {
             public Codec(byte[] bytes) {
                 super(bytes, T8001Protocol.class);
             }
@@ -108,6 +107,7 @@ public class T905Test {
             }
 
             public static class Codec extends ProtocolCodec<Data>{
+
                 public Codec(byte[] bytes) {
                     super(bytes, Data.class);
                 }

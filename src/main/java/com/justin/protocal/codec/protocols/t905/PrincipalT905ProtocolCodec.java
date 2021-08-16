@@ -31,6 +31,6 @@ public class PrincipalT905ProtocolCodec<Principal extends PrincipalT905Protocol<
 
     @Override
     protected void afterDeserialize(Principal ret) {
-        CheckSumVerifier.check(ret.getCheck(), ret.getIsuId(), ret.getMessageId(), ret.getData());
+        CheckSumVerifier.check(ret.getCheck(), ret.getIsuId(), ret.getMessageSerialNo(), ret.getData());
     }
 }
