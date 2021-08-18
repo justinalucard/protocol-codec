@@ -1,7 +1,9 @@
-import com.justin.protocal.codec.enums.LampColorEnum;
-import com.justin.protocal.codec.naives.*;
-import com.justin.protocal.codec.protocols.lamp.LampColorObjectCodec;
-import com.justin.protocal.codec.utils.ConverterUtils;
+import io.github.justinalucard.protocalcodec.enums.LampColorEnum;
+import io.github.justinalucard.protocalcodec.naives.ByteArrayObjectCodec;
+import io.github.justinalucard.protocalcodec.naives.TlvObjectCodec;
+import io.github.justinalucard.protocalcodec.naives.UInt16ObjectCodec;
+import io.github.justinalucard.protocalcodec.protocols.llc.lamp.LampColorObjectCodec;
+import io.github.justinalucard.protocalcodec.utils.ConverterUtils;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -31,7 +33,7 @@ public class TlvObjectCodecTest {
     }
 
 
-    public static class LampTlvCodec extends TlvObjectCodec<LampColorObjectCodec, IntObjectCodec, ByteArrayObjectCodec>{
+    public static class LampTlvCodec extends TlvObjectCodec<LampColorObjectCodec, UInt16ObjectCodec, ByteArrayObjectCodec> {
 
         public LampTlvCodec(byte[] bytes) {
             super(bytes, 2, 2);

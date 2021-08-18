@@ -1,0 +1,42 @@
+package io.github.justinalucard.protocalcodec.naives;
+
+import io.github.justinalucard.protocalcodec.core.ObjectCodec;
+import io.github.justinalucard.protocalcodec.core.ProtocolFragment;
+import io.github.justinalucard.protocalcodec.utils.ConverterUtils;
+
+
+/**
+ * Long长整数编解码器
+ */
+public class LongObjectCodec extends ObjectCodec<Long> {
+
+
+
+    public LongObjectCodec(byte[] bytes) {
+        super(bytes, Long.class);
+    }
+
+    public LongObjectCodec(String hexString) {
+        super(hexString, Long.class);
+    }
+
+    public LongObjectCodec(Long value) {
+        super(value, Long.class);
+    }
+
+    @Override
+    protected Long deserialize() {
+        byte[] bytes = getBytes();
+        return ConverterUtils.getLong(bytes);
+    }
+
+    @Override
+    protected ProtocolFragment serialize() {
+        if(this.getValue() != null){
+            return new ProtocolFragment(ConverterUtils.getBytes(this.getValue()));
+        }
+        return null;
+    }
+
+
+}

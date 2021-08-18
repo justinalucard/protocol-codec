@@ -1,10 +1,10 @@
-import com.justin.protocal.codec.annotations.Protocol;
-import com.justin.protocal.codec.core.ProtocolCodec;
-import com.justin.protocal.codec.core.ProtocolFragment;
-import com.justin.protocal.codec.naives.UInt16ObjectCodec;
-import com.justin.protocal.codec.naives.UInt8ObjectCodec;
-import com.justin.protocal.codec.protocols.t905.PrincipalT905Protocol;
-import com.justin.protocal.codec.protocols.t905.PrincipalT905ProtocolCodec;
+import io.github.justinalucard.protocalcodec.annotations.Protocol;
+import io.github.justinalucard.protocalcodec.core.ProtocolCodec;
+import io.github.justinalucard.protocalcodec.core.ProtocolFragment;
+import io.github.justinalucard.protocalcodec.naives.UInt16ObjectCodec;
+import io.github.justinalucard.protocalcodec.naives.UInt8ObjectCodec;
+import io.github.justinalucard.protocalcodec.protocols.t905.PrincipalT905Protocol;
+import io.github.justinalucard.protocalcodec.protocols.t905.PrincipalT905ProtocolCodec;
 import org.junit.Test;
 
 public class T905Test {
