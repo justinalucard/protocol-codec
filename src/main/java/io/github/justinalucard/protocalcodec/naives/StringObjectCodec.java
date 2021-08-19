@@ -16,7 +16,7 @@ public class StringObjectCodec extends ObjectCodec<String> {
     /**
      * 隐藏了hexString的构造函数，对于字符串类的初始化直接使用字符串本身的值（而非hexString）进行构造。
      * 如果调试协议，可以使用{@link StringObjectCodec#StringObjectCodec(byte[])}进行测试
-     * @param value
+     * @param value 原始的字符串
      */
     public StringObjectCodec(String value, Charset charset) {
         this(value, charset,false);

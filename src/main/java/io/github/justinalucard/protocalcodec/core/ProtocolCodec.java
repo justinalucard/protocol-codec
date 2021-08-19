@@ -16,7 +16,7 @@ import java.util.*;
 /**
  * 通用编解码器，是{@link ProtocolFragment}的高级版本。
  * 增加了{@link ProtocolCodec#getValue()}和对value的通用编码{@link ProtocolCodec#serialize()}解码{@link ProtocolCodec#deserialize()}实现
- * @param <ProtocolData>
+ * @param <ProtocolData> 需要被编解码的协议数据类型
  */
 public abstract class ProtocolCodec<ProtocolData extends ProtocolFragment> extends ObjectCodec<ProtocolData> {
 
@@ -45,7 +45,7 @@ public abstract class ProtocolCodec<ProtocolData extends ProtocolFragment> exten
 
     /**
      * 根据{@link Protocol}注解进行通用解码
-     * @return
+     * @return 反序列化的结果
      */
     @SuppressWarnings("all")
     protected ProtocolData deserialize() {

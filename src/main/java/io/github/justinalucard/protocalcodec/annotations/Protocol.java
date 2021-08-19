@@ -13,30 +13,30 @@ import java.lang.annotation.*;
 public @interface Protocol {
     /**
      * 协议字段所处的位置，越小的在越前面
-     * @return
+     * @return 顺序
      */
     int order() default 0;
     /**
      * 该协议字段的长度
-     * @return
+     * @return 占用字节的长度
      */
     int length() default 0;
 
     /**
      * 如果当前协议字段是长度字段，必须将该值设置成true
-     * @return
+     * @return 该字段是否为长度定义区
      */
     boolean isLengthField() default false;
 
     /**
      * 由于协议中Data部分的长度，一般都无法确定。序列化时用来确定这不确定的data域的长度
-     * @return
+     * @return 序列化长度计算器
      */
     Class<? extends SerializeLengthDetermination> serializeLengthDetermination() default SerializeLengthDetermination.class;
 
     /**
      * 与{@link Protocol#serializeLengthDetermination()}同理
-     * @return
+     * @return 反序列化长度计算器
      */
     Class<? extends DeserializeLengthDetermination> deserializeLengthDetermination() default DeserializeLengthDetermination.class;
 

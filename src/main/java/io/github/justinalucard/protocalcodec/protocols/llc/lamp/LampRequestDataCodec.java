@@ -22,7 +22,7 @@ public class LampRequestDataCodec extends ProtocolCodec<LampRequestData> {
      * 静态工厂方法，语法糖
      * @param lampColor 颜色
      * @param lightCount 亮灯数
-     * @return
+     * @return LampRequestDataCodec协议解码器
      */
     public static LampRequestDataCodec create(LampColorEnum lampColor, int lightCount){
         return new LampRequestDataCodec(new LampRequestData(lampColor, lightCount));

@@ -7,7 +7,7 @@ public class BufferUtils {
      * 将传入的字节数组，按照指定长度，前方补0
      * @param bytes 需要修正的字节数组
      * @param length 修正后的长度
-     * @return
+     * @return 修正过的字节结果
      */
     public static byte[] fixLengthPaddingLeft(byte[] bytes, int length) {
         byte[] ret = new byte[length];
@@ -23,10 +23,10 @@ public class BufferUtils {
 
     /**
      * 将任意类型的数据进行合并
-     * @param first
-     * @param second
-     * @param <S>
-     * @return
+     * @param first 第一个数组
+     * @param second 第二个数组
+     * @param <S> 数组元素的类型
+     * @return 合并后的数组
      */
     public static <S> S[] concat(S[] first, S[] second) {
         S[] result = Arrays.copyOf(first, first.length + second.length);
@@ -36,9 +36,9 @@ public class BufferUtils {
 
     /**
      * 将字节类型的数组进行合并
-     * @param first
-     * @param second
-     * @return
+     * @param first 第一个字节数组
+     * @param second 第二个字节数组
+     * @return 合并以后的字节数组
      */
     public static byte[] concat(byte[] first, byte[] second) {
         byte[] result = Arrays.copyOf(first, first.length + second.length);

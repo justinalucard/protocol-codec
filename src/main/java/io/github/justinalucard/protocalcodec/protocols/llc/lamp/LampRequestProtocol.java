@@ -9,8 +9,8 @@ public class LampRequestProtocol extends PrincipalLlcProtocol<LampRequestDataCod
     /**
      * 根据数据域编码器，创建一条变灯请求协议的语法糖
      *
-     * @param codec
-     * @return
+     * @param codec LampRequestDataCodec数据解码器
+     * @return LampRequestProtocol协议解码器
      */
     public static LampRequestProtocol create(LampRequestDataCodec codec) {
         return new LampRequestProtocol(codec);

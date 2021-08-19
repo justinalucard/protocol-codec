@@ -6,8 +6,8 @@ import io.github.justinalucard.protocalcodec.exceptions.IllegalProtocolException
 public class CheckSumUtils {
     /**
      * 简单的校验位算法
-     * @param protocolFragments
-     * @return
+     * @param protocolFragments 所有需要进行lrc算法的因子
+     * @return lrc算法计算结果
      */
     public static ProtocolFragment lrc(ProtocolFragment... protocolFragments){
         if(protocolFragments != null && protocolFragments.length > 0){

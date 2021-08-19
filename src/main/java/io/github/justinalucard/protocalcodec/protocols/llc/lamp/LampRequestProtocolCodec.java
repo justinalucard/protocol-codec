@@ -20,7 +20,7 @@ public class LampRequestProtocolCodec extends PrincipalLlcProtocolCodec<LampRequ
      * 创建工厂语法糖
      * @param lampColor 颜色
      * @param lightCount 亮灯数
-     * @return
+     * @return LampRequestProtocolCodec协议解码器
      */
     public static LampRequestProtocolCodec create(LampColorEnum lampColor, int lightCount) {
         return new LampRequestProtocolCodec(LampRequestProtocol.create(LampRequestDataCodec.create(lampColor, lightCount)));
