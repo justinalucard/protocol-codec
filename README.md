@@ -16,7 +16,7 @@ protocol-codec就是为了解决这些繁复工作的通用实现，里面内置
 ### 0x8001的协议定义:
 ```
 //PrincipalT905Protocol这个类已经在protocol-codec源码里内置
-public class T8001Protocol extends PrincipalT905Protocol<T8001Protocol.Data.Codec>{
+public  class T8001Protocol extends PrincipalT905Protocol<T8001Protocol.Data.Codec> {
 
     public T8001Protocol(String isuId, int messageSerialNo, Data.Codec codec) {
         super(0x8001, isuId, messageSerialNo, codec);
@@ -44,8 +44,14 @@ public class T8001Protocol extends PrincipalT905Protocol<T8001Protocol.Data.Code
         }
     }
 
+    //1.1.1新增模型转换AutoMapperProtocolData
+    public static class Data extends AutoMapperProtocolData<Model> {
 
-    public static class Data extends ProtocolFragment{
+        //1.1.1新增模型转换
+        public Data(Model model){
+            super(model);
+        }
+
         public Data(byte[] bytes) {
             super(bytes);
         }
@@ -54,11 +60,6 @@ public class T8001Protocol extends PrincipalT905Protocol<T8001Protocol.Data.Code
             super(hexString);
         }
 
-        public Data(int responseMessageSerialNo, int responseMessageId, int result) {
-            this.responseMessageSerialNo = new UInt16ObjectCodec(responseMessageSerialNo);
-            this.responseMessageId = new UInt16ObjectCodec(responseMessageId);
-            this.result = new UInt8ObjectCodec(result);
-        }
 
         @Protocol(order = 0, length = 2)
         UInt16ObjectCodec responseMessageSerialNo;
@@ -79,7 +80,7 @@ public class T8001Protocol extends PrincipalT905Protocol<T8001Protocol.Data.Code
             return result;
         }
 
-        public static class Codec extends ProtocolCodec<Data>{
+        public static class Codec extends ProtocolCodec<Data> {
 
             public Codec(byte[] bytes) {
                 super(bytes, Data.class);
@@ -92,6 +93,37 @@ public class T8001Protocol extends PrincipalT905Protocol<T8001Protocol.Data.Code
             public Codec(Data data) {
                 super(data, Data.class);
             }
+        }
+    }
+    
+    //1.1.1新增模型转换
+    public static class Model {
+        Integer responseMessageSerialNo;
+        Integer responseMessageId;
+        Integer result;
+
+        public Integer getResponseMessageSerialNo() {
+            return responseMessageSerialNo;
+        }
+
+        public void setResponseMessageSerialNo(Integer responseMessageSerialNo) {
+            this.responseMessageSerialNo = responseMessageSerialNo;
+        }
+
+        public Integer getResponseMessageId() {
+            return responseMessageId;
+        }
+
+        public void setResponseMessageId(Integer responseMessageId) {
+            this.responseMessageId = responseMessageId;
+        }
+
+        public Integer getResult() {
+            return result;
+        }
+
+        public void setResult(Integer result) {
+            this.result = result;
         }
     }
 }
@@ -116,4 +148,30 @@ byte[] bytes1 = new byte[]{126, -128, 1, 0, 13, 16, 18, 52, 86, 120, -112, 0, 10
 T8001Protocol.Codec codec3 = new T8001Protocol.Codec(bytes1);
 System.out.println(codec2.getValue().getIsuId().getValue()); //101234567890
 System.out.println(codec3.getValue().getIsuId().getValue()); //101234567890
+```
+
+### 0x8001的模型编码操作
+
+```
+T8001Protocol.Model model = new T8001Protocol.Model();
+model.setResponseMessageId(1);
+model.setResult(2);
+model.setResponseMessageSerialNo(3);
+
+T8001Protocol.Data data = new T8001Protocol.Data(model);
+T8001Protocol.Data.Codec dataCodec = new T8001Protocol.Data.Codec(data);
+T8001Protocol t8001Protocol = new T8001Protocol("101234567890", 100, dataCodec);
+T8001Protocol.Codec codec = new T8001Protocol.Codec(t8001Protocol);
+System.out.println(codec);
+System.out.println(codec.getValue().getIsuId().getValue());
+```
+### 0x8001的模型解码操作
+```
+byte[] bytes1 = new byte[]{126, -128, 1, 0, 13, 16, 18, 52, 86, 120, -112, 0, 100, 0, 1, 0, 2, 3, 30, 126};
+
+T8001Protocol.Codec codec2 = new T8001Protocol.Codec(codec.getBytes());
+System.out.println(codec2.getValue().getIsuId().getValue());
+
+//类里的各属性已转换完毕，可以直接调用模型类
+System.out.println(codec2.getValue().getData().getValue().get().getResponseMessageId());
 ```

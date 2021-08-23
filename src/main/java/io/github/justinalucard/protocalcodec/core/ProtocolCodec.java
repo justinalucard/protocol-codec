@@ -6,6 +6,7 @@ import io.github.justinalucard.protocalcodec.protocols.DeserializeLengthDetermin
 import io.github.justinalucard.protocalcodec.protocols.LengthField;
 import io.github.justinalucard.protocalcodec.protocols.SerializeLengthDetermination;
 import io.github.justinalucard.protocalcodec.utils.BufferUtils;
+import io.github.justinalucard.protocalcodec.utils.ReflectUtils;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -107,10 +108,6 @@ public abstract class ProtocolCodec<ProtocolData extends ProtocolFragment> exten
             for (Map.Entry<Protocol, Field> protocolDefine : protocolDefines.entrySet()) {
                 ProtocolFragment fragment = (ProtocolFragment) protocolDefine.getValue().get(getValue());
 
-//                if (fragment == null && protocolDefine.getKey().valueCalculator() != Void.class) {
-//                    fragment = new IntProtocolCodec(3);
-//                }
-
                 result = BufferUtils.concat(result, BufferUtils.fixLengthPaddingLeft(fragment.getBytes(), getDefinedLength(protocolDefine, null)));
 
             }
@@ -154,17 +151,7 @@ public abstract class ProtocolCodec<ProtocolData extends ProtocolFragment> exten
      * @return 协议定义
      */
     protected Map<Protocol, Field> getProtocolDefine() {
-        Class<?> clazz = tClass;
-        Field[] fields = clazz.getFields();
-        fields = BufferUtils.concat(BufferUtils.concat(fields, clazz.getDeclaredFields()), clazz.getSuperclass().getDeclaredFields());
-        Map<Protocol, Field> annotations = new HashMap<>();
-        for (Field field : fields) {
-            Protocol annotation = field.getAnnotation(Protocol.class);
-            if (annotation != null) {
-                field.setAccessible(true);
-                annotations.put(annotation, field);
-            }
-        }
+        Map<Protocol, Field> annotations = ReflectUtils.getAnnotations(tClass, Protocol.class);
         Map<Protocol, Field> result = new LinkedHashMap<>();
         annotations.entrySet().stream().sorted(Comparator.comparing(x -> x.getKey().order()))
                 .forEachOrdered(x -> result.put(x.getKey(), x.getValue()));

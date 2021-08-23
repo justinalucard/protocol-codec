@@ -5,6 +5,11 @@ import io.github.justinalucard.protocalcodec.core.ProtocolFragment;
 import io.github.justinalucard.protocalcodec.enums.LampColorEnum;
 import io.github.justinalucard.protocalcodec.exceptions.IllegalProtocolException;
 import io.github.justinalucard.protocalcodec.naives.IntObjectCodec;
+import io.github.justinalucard.protocalcodec.utils.BufferUtils;
+import io.github.justinalucard.protocalcodec.utils.ReflectUtils;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
 /**
  * 变灯请求Data域的数据实体
