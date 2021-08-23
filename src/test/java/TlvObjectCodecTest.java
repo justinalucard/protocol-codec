@@ -1,9 +1,9 @@
-import io.github.justinalucard.protocalcodec.enums.LampColorEnum;
-import io.github.justinalucard.protocalcodec.naives.ByteArrayObjectCodec;
-import io.github.justinalucard.protocalcodec.naives.TlvObjectCodec;
-import io.github.justinalucard.protocalcodec.naives.UInt16ObjectCodec;
-import io.github.justinalucard.protocalcodec.protocols.llc.lamp.LampColorObjectCodec;
-import io.github.justinalucard.protocalcodec.utils.ConverterUtils;
+import io.github.justinalucard.protocolcodec.enums.LampColorEnum;
+import io.github.justinalucard.protocolcodec.naives.ByteArrayObjectCodec;
+import io.github.justinalucard.protocolcodec.naives.TlvObjectCodec;
+import io.github.justinalucard.protocolcodec.naives.UInt16ObjectCodec;
+import io.github.justinalucard.protocolcodec.protocols.llc.lamp.LampColorObjectCodec;
+import io.github.justinalucard.protocolcodec.utils.ConverterUtils;
 import org.junit.Test;
 
 import java.util.Arrays;

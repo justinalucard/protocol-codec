@@ -1,11 +1,10 @@
-import io.github.justinalucard.protocalcodec.annotations.Protocol;
-import io.github.justinalucard.protocalcodec.core.AutoMapperProtocolData;
-import io.github.justinalucard.protocalcodec.core.ProtocolCodec;
-import io.github.justinalucard.protocalcodec.core.ProtocolFragment;
-import io.github.justinalucard.protocalcodec.naives.UInt16ObjectCodec;
-import io.github.justinalucard.protocalcodec.naives.UInt8ObjectCodec;
-import io.github.justinalucard.protocalcodec.protocols.t905.PrincipalT905Protocol;
-import io.github.justinalucard.protocalcodec.protocols.t905.PrincipalT905ProtocolCodec;
+import io.github.justinalucard.protocolcodec.annotations.Protocol;
+import io.github.justinalucard.protocolcodec.core.AutoMapperProtocolData;
+import io.github.justinalucard.protocolcodec.core.ProtocolCodec;
+import io.github.justinalucard.protocolcodec.naives.UInt16ObjectCodec;
+import io.github.justinalucard.protocolcodec.naives.UInt8ObjectCodec;
+import io.github.justinalucard.protocolcodec.protocols.t905.PrincipalT905Protocol;
+import io.github.justinalucard.protocolcodec.protocols.t905.PrincipalT905ProtocolCodec;
 import org.junit.Test;
 
 
@@ -23,10 +22,12 @@ public class T905Test {
         model.setResult(2);
         model.setResponseMessageSerialNo(3);
 
-        T8001Protocol.Data data = new T8001Protocol.Data(model);
-        T8001Protocol.Data.Codec dataCodec = new T8001Protocol.Data.Codec(data);
-        T8001Protocol t8001Protocol = new T8001Protocol("101234567890", 100, dataCodec);
-        T8001Protocol.Codec codec = new T8001Protocol.Codec(t8001Protocol);
+//        T8001Protocol.Data data = new T8001Protocol.Data(model);
+//        T8001Protocol.Data.Codec dataCodec = new T8001Protocol.Data.Codec(data);
+//        T8001Protocol t8001Protocol = new T8001Protocol("101234567890", 100, dataCodec);
+//        T8001Protocol.Codec codec = new T8001Protocol.Codec(t8001Protocol);
+
+        T8001Protocol.Codec codec = T8001Protocol.create("101234567890", 100, model);
         System.out.println(codec);
         System.out.println(codec.getValue().getIsuId().getValue());
 
@@ -35,7 +36,12 @@ public class T905Test {
         T8001Protocol.Codec codec2 = new T8001Protocol.Codec(codec.getBytes());
         System.out.println(codec2.getValue().getIsuId().getValue());
 
+
+
         System.out.println(codec2.getValue().getData().getValue().get().getResponseMessageId());
+        System.out.println(codec2.getValue().getData().getValue().get().getResult());
+        System.out.println(codec2.getValue().getData().getValue().get().getResponseMessageSerialNo());
+
     }
 
 
@@ -51,6 +57,13 @@ public class T905Test {
 
         public T8001Protocol(String hexString) {
             super(hexString);
+        }
+
+        public static T8001Protocol.Codec  create(String isuId, int messageSerialNo, Model model){
+            T8001Protocol.Data data = new T8001Protocol.Data(model);
+            T8001Protocol.Data.Codec dataCodec = new T8001Protocol.Data.Codec(data);
+            T8001Protocol t8001Protocol = new T8001Protocol(isuId, messageSerialNo, dataCodec);
+            return new Codec(t8001Protocol);
         }
 
         public static class Codec extends PrincipalT905ProtocolCodec<T8001Protocol> {

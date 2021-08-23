@@ -8,7 +8,7 @@
     <url>https://github.com/justinalucard/protocol-codec</url>
 
     <groupId>io.github.justinalucard</groupId>
-    <artifactId>io.github.justinalucard.protocalcodec</artifactId>
+    <artifactId>io.github.justinalucard.protocolcodec</artifactId>
     <version>1.1.1</version>
 
     <build>
