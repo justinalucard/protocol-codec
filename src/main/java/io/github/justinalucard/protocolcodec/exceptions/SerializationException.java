@@ -1,7 +1,7 @@
 package io.github.justinalucard.protocolcodec.exceptions;
 
 /**
- * 所有协议解析过程的通用异常
+ * 所有协议序列化过程的通用异常
  */
 public class SerializationException extends RuntimeException {
 

@@ -35,8 +35,11 @@ public class AutoMapperProtocolData<T> extends ProtocolFragment {
                 }
 
                 if (targetField != null) {
-                    Object value = targetField.getType().getConstructor(sourceField.getType()).newInstance(sourceField.get(t));
-                    targetField.set(this, value);
+                    Object sourceValue = sourceField.get(t);
+                    if(sourceValue != null) {
+                        Object value = targetField.getType().getConstructor(sourceField.getType()).newInstance(sourceField.get(t));
+                        targetField.set(this, value);
+                    }
                 }
             }
         }
@@ -61,8 +64,11 @@ public class AutoMapperProtocolData<T> extends ProtocolFragment {
             for (Field sourceField : sourceFields) {
                 for (Field targetField : targetFields) {
                     if(targetField.getName().equalsIgnoreCase(sourceField.getName())){
-                        Object value = sourceField.get(this).getClass().getMethod("getValue", null).invoke(sourceField.get(this));
-                        targetField.set(t, value);
+                        Object sourceValue = sourceField.get(this);
+                        if(sourceValue != null) {
+                            Object value = sourceValue.getClass().getMethod("getValue", null).invoke(sourceValue);
+                            targetField.set(t, value);
+                        }
                         break;
                     }
                 }

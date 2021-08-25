@@ -9,7 +9,7 @@
 
     <groupId>io.github.justinalucard</groupId>
     <artifactId>io.github.justinalucard.protocolcodec</artifactId>
-    <version>1.1.1</version>
+    <version>1.1.2</version>
 
     <build>
         <plugins>
@@ -40,12 +40,6 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.13.1</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.sonatype.plugins/nexus-staging-maven-plugin -->
-        <dependency>
-            <groupId>org.sonatype.plugins</groupId>
-            <artifactId>nexus-staging-maven-plugin</artifactId>
-            <version>1.6.8</version>
         </dependency>
 
     </dependencies>

@@ -8,7 +8,7 @@ import io.github.justinalucard.protocolcodec.protocols.t905.PrincipalT905Protoco
 import org.junit.Test;
 
 
-public class T905Test {
+public class T905_0x8001Test {
 
     @Test
     public void testT8001() {

@@ -10,7 +10,9 @@ import io.github.justinalucard.protocolcodec.annotations.Protocol;
  */
 public abstract class ObjectCodec<T> extends ProtocolFragment {
 
-    protected ObjectCodec(){}
+    protected ObjectCodec(){
+        fromBytes(new byte[0]);
+    }
 
 
     public ObjectCodec(byte[] bytes, Class<?> tClass) {

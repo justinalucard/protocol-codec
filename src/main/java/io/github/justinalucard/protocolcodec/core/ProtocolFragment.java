@@ -60,10 +60,10 @@ public class ProtocolFragment {
      */
     @Override
     public String toString() {
-        return "ProtocolFragment{" +
+        return "======== " + getClass().getName() + " ========\n" +
                 "bytes=" + Arrays.toString(bytes) +
-                ", hexString='" + hexString + '\'' +
-                '}';
+                "\nhexString='" + getHexString() + "'\n" +
+                new String(new char[getClass().getName().length() + 18]).replace("\0", "=");
     }
 
     /**
