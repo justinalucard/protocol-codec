@@ -2,7 +2,7 @@ package io.github.justinalucard.protocolcodec.protocols.t905.codecs;
 
 import io.github.justinalucard.protocolcodec.core.ObjectCodec;
 import io.github.justinalucard.protocolcodec.naives.UInt16ObjectCodec;
-import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.ArrayList;
 import java.util.List;

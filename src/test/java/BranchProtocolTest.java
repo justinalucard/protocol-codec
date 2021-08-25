@@ -2,7 +2,6 @@ import io.github.justinalucard.protocolcodec.annotations.Protocol;
 import io.github.justinalucard.protocolcodec.core.AutoMapperProtocolData;
 import io.github.justinalucard.protocolcodec.core.ProtocolCodec;
 import io.github.justinalucard.protocolcodec.naives.UInt16ObjectCodec;
-import io.github.justinalucard.protocolcodec.naives.UInt8ObjectCodec;
 import io.github.justinalucard.protocolcodec.protocols.t905.PrincipalT905Protocol;
 import io.github.justinalucard.protocolcodec.protocols.t905.PrincipalT905ProtocolCodec;
 import org.junit.Test;
