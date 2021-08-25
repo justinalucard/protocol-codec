@@ -18,7 +18,6 @@ public class Bcd8421ObjectCodec extends ObjectCodec<String> {
 
     public Bcd8421ObjectCodec(String bcd, boolean hexString) {
         super();
-        this.tClass = String.class;
         fromValue(bcd);
         if(hexString){
             this.setHexString(bcd);

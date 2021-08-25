@@ -48,7 +48,6 @@ public abstract class ObjectCodec<T> extends ProtocolFragment {
         this.setBytes(this.serialize().getBytes());
     }
 
-    protected Class<?> tClass;
 
     private T value;
 

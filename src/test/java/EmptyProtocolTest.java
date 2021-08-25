@@ -1,10 +1,9 @@
-import io.github.justinalucard.protocolcodec.annotations.Protocol;
-import io.github.justinalucard.protocolcodec.core.AutoMapperProtocolData;
-import io.github.justinalucard.protocolcodec.core.ProtocolCodec;
+import io.github.justinalucard.protocolcodec.core.ProtocolFragment;
+import io.github.justinalucard.protocolcodec.naives.BitsObjectCodec;
 import io.github.justinalucard.protocolcodec.naives.EmptyObjectCodec;
-import io.github.justinalucard.protocolcodec.naives.UInt16ObjectCodec;
 import io.github.justinalucard.protocolcodec.protocols.t905.PrincipalT905Protocol;
 import io.github.justinalucard.protocolcodec.protocols.t905.PrincipalT905ProtocolCodec;
+import io.github.justinalucard.protocolcodec.utils.ConverterUtils;
 import org.junit.Test;
 
 
@@ -12,6 +11,13 @@ public class EmptyProtocolTest {
 
     @Test
     public void testTEmpty() {
+
+        BitsObjectCodec bits = new BitsObjectCodec(new ProtocolFragment("AA").getBytes());
+        BitsObjectCodec bits2 = new BitsObjectCodec("101010101");
+        System.out.println(bits2.getValue());
+        System.out.println(ConverterUtils.getUInt16(bits2.getBytes()));
+        BitsObjectCodec bits3 = new BitsObjectCodec(bits2.getBytes());
+        System.out.println(bits3.getValue());
 
         TEmptyProtocol.Codec codec = TEmptyProtocol.create("101234567890", 0xFFFF);
         System.out.println(codec);

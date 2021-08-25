@@ -24,7 +24,6 @@ public class StringObjectCodec extends ObjectCodec<String> {
 
     public StringObjectCodec(String s, Charset charset, boolean hexString) {
         super();
-        this.tClass = String.class;
         fromValue(s);
         if(hexString){
             this.setHexString(s);
