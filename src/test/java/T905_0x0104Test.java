@@ -4,7 +4,7 @@ import io.github.justinalucard.protocolcodec.core.ProtocolCodec;
 import io.github.justinalucard.protocolcodec.naives.*;
 import io.github.justinalucard.protocolcodec.protocols.t905.PrincipalT905Protocol;
 import io.github.justinalucard.protocolcodec.protocols.t905.PrincipalT905ProtocolCodec;
-import io.github.justinalucard.protocolcodec.protocols.t905.codecs.base.GbkString0x00ObjectCodec;
+import io.github.justinalucard.protocolcodec.protocols.t905.codecs.GbkString0x00ObjectCodec;
 import org.junit.Test;
 
 import java.util.HashMap;
@@ -70,11 +70,11 @@ public class T905_0x0104Test {
 
         public static class Codec extends PrincipalT905ProtocolCodec<T0104Protocol> {
             public Codec(byte[] bytes) {
-                super(bytes, T0104Protocol.class);
+                super(bytes);
             }
 
             public Codec(String hexString) {
-                super(hexString, T0104Protocol.class);
+                super(hexString);
             }
 
             public Codec(T0104Protocol t0104Protocol) {
@@ -127,15 +127,15 @@ public class T905_0x0104Test {
             public static class Codec extends ProtocolCodec<Data> {
 
                 public Codec(byte[] bytes) {
-                    super(bytes, Data.class);
+                    super(bytes);
                 }
 
                 public Codec(String hexString) {
-                    super(hexString, Data.class);
+                    super(hexString);
                 }
 
                 public Codec(Data data) {
-                    super(data, Data.class);
+                    super(data);
                 }
             }
         }

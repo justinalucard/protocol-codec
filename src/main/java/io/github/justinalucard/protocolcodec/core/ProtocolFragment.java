@@ -24,7 +24,7 @@ public class ProtocolFragment {
     }
 
     public ProtocolFragment() {
-
+        //这里不能写任何代码，否则会引发异常
     }
 
     protected void fromBytes(byte[] bytes) {

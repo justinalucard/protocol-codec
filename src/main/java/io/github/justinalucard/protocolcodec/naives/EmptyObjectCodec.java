@@ -6,14 +6,15 @@ import io.github.justinalucard.protocolcodec.core.ProtocolFragment;
 public class EmptyObjectCodec extends ObjectCodec<Object> {
 
     public EmptyObjectCodec() {
+        super(new byte[0]);
     }
 
     public EmptyObjectCodec(byte[] bytes) {
-        super(bytes, byte[].class);
+        super(bytes);
     }
 
     public EmptyObjectCodec(String hexString) {
-        super(hexString, byte[].class);
+        super(hexString);
     }
 
     @Override

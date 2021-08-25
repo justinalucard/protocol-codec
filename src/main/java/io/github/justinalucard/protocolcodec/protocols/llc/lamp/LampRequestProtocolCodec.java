@@ -9,11 +9,11 @@ import io.github.justinalucard.protocolcodec.protocols.llc.PrincipalLlcProtocolC
 public class LampRequestProtocolCodec extends PrincipalLlcProtocolCodec<LampRequestProtocol> {
 
     public LampRequestProtocolCodec(byte[] bytes) {
-        super(bytes, LampRequestProtocol.class);
+        super(bytes);
     }
 
     public LampRequestProtocolCodec(LampRequestProtocol data) {
-        super(data, LampRequestProtocol.class);
+        super(data);
     }
 
     /**

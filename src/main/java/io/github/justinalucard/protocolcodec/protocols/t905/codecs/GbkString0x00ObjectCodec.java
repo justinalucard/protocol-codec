@@ -1,4 +1,4 @@
-package io.github.justinalucard.protocolcodec.protocols.t905.codecs.base;
+package io.github.justinalucard.protocolcodec.protocols.t905.codecs;
 
 import io.github.justinalucard.protocolcodec.core.ProtocolFragment;
 import io.github.justinalucard.protocolcodec.naives.GbkStringObjectCodec;

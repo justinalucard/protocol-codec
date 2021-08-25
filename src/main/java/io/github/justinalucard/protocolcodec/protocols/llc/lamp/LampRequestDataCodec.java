@@ -11,11 +11,11 @@ import java.util.Arrays;
 public class LampRequestDataCodec extends ProtocolCodec<LampRequestData> {
 
     public LampRequestDataCodec(byte[] bytes) {
-        super(bytes, LampRequestData.class);
+        super(bytes);
     }
 
     public LampRequestDataCodec(LampRequestData lampRequestData) {
-        super(lampRequestData, lampRequestData.getClass());
+        super(lampRequestData);
     }
 
     /**

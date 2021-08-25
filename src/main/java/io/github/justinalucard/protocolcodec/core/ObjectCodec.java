@@ -11,31 +11,22 @@ import io.github.justinalucard.protocolcodec.annotations.Protocol;
 public abstract class ObjectCodec<T> extends ProtocolFragment {
 
     protected ObjectCodec(){
-        fromBytes(new byte[0]);
+
     }
 
 
-    public ObjectCodec(byte[] bytes, Class<?> tClass) {
-        this.tClass = tClass;
-        fromBytes(bytes);
+    public ObjectCodec(byte[] bytes) {
+        super(bytes);
     }
 
-    public ObjectCodec(String hexString, Class<?> tClass) {
-        this.tClass = tClass;
-        fromHexString(hexString);
+    public ObjectCodec(String hexString) {
+        super(hexString);
     }
 
 
 
-    public ObjectCodec(T value, Class<?> tClass) {
-        this.tClass = tClass;
+    public ObjectCodec(T value) {
         fromValue(value);
-    }
-
-
-
-    public ObjectCodec(Class<?> tClass) {
-        this.tClass = tClass;
     }
 
 

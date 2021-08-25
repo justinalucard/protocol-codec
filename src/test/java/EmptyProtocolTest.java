@@ -45,11 +45,11 @@ public class EmptyProtocolTest {
 
         public static class Codec extends PrincipalT905ProtocolCodec<TEmptyProtocol> {
             public Codec(byte[] bytes) {
-                super(bytes, TEmptyProtocol.class);
+                super(bytes);
             }
 
             public Codec(String hexString) {
-                super(hexString, TEmptyProtocol.class);
+                super(hexString);
             }
 
             public Codec(TEmptyProtocol tEmptyProtocol) {

@@ -10,7 +10,7 @@ import java.nio.charset.Charset;
  */
 public class StringObjectCodec extends ObjectCodec<String> {
     public StringObjectCodec(byte[] bytes) {
-        super(bytes, String.class);
+        super(bytes);
     }
 
     /**

@@ -13,15 +13,15 @@ public class LongObjectCodec extends ObjectCodec<Long> {
 
 
     public LongObjectCodec(byte[] bytes) {
-        super(bytes, Long.class);
+        super(bytes);
     }
 
     public LongObjectCodec(String hexString) {
-        super(hexString, Long.class);
+        super(hexString);
     }
 
     public LongObjectCodec(Long value) {
-        super(value, Long.class);
+        super(value);
     }
 
     @Override

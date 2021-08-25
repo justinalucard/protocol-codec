@@ -17,15 +17,15 @@ public class LampColorObjectCodec extends ObjectCodec<LampColorEnum> {
 
 
     public LampColorObjectCodec(byte[] bytes) {
-        super(bytes, LampColorEnum.class);
+        super(bytes);
     }
 
     public LampColorObjectCodec(String hexString) {
-        super(hexString, LampColorEnum.class);
+        super(hexString);
     }
 
     public LampColorObjectCodec(LampColorEnum lampColorEnum) {
-        super(lampColorEnum, LampColorEnum.class);
+        super(lampColorEnum);
     }
 
     @Override

@@ -13,7 +13,7 @@ public class ByteArrayObjectCodec extends ObjectCodec<byte[]> {
     }
 
     public ByteArrayObjectCodec(String hexString) {
-        super(hexString, byte[].class);
+        super(hexString);
     }
 
     @Override

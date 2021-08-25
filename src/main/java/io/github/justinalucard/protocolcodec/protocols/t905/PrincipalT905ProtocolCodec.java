@@ -5,29 +5,24 @@ import io.github.justinalucard.protocolcodec.core.ProtocolFragment;
 import io.github.justinalucard.protocolcodec.protocols.CheckSumVerifier;
 
 public class PrincipalT905ProtocolCodec<Principal extends PrincipalT905Protocol<? extends ProtocolFragment>>  extends ProtocolCodec<Principal> {
+
     public PrincipalT905ProtocolCodec(byte[] bytes) {
-        this(bytes, null);
+        super(bytes);
     }
 
-    public PrincipalT905ProtocolCodec(byte[] bytes, Class<?> tClass) {
-        super(bytes, tClass);
-    }
-
-    public PrincipalT905ProtocolCodec(String hexString, Class<?> tClass) {
-        super(hexString, tClass);
+    public PrincipalT905ProtocolCodec(String hexString) {
+        super(hexString);
     }
 
     public PrincipalT905ProtocolCodec(Principal principal, Class<?> tClass) {
-        super(principal, tClass);
+        super(principal);
     }
 
     public PrincipalT905ProtocolCodec(Principal principal) {
-        super(principal, principal.getClass());
+        super(principal);
     }
 
-    public PrincipalT905ProtocolCodec(Class<?> tClass) {
-        super(tClass);
-    }
+
 
     @Override
     protected void afterDeserialize(Principal ret) {

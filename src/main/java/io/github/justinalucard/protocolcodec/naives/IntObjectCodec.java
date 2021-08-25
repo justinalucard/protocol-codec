@@ -16,15 +16,15 @@ public class IntObjectCodec extends ObjectCodec<Integer> {
 
 
     public IntObjectCodec(byte[] bytes) {
-        super(bytes, Integer.class);
+        super(bytes);
     }
 
     public IntObjectCodec(String hexString) {
-        super(hexString, Integer.class);
+        super(hexString);
     }
 
     public IntObjectCodec(Integer integer) {
-        super(integer, Integer.class);
+        super(integer);
     }
 
     @Override
@@ -39,18 +39,6 @@ public class IntObjectCodec extends ObjectCodec<Integer> {
             return new ProtocolFragment(ConverterUtils.getBytes(this.getValue()));
         }
         return null;
-    }
-
-
-    public static void main(String[] args) {
-        IntObjectCodec intProtocolNode = new IntObjectCodec("FFFF");
-        System.out.println(intProtocolNode.getValue());
-        System.out.println(intProtocolNode.getHexString());
-        System.out.println(Arrays.toString(intProtocolNode.getBytes()));
-        IntObjectCodec intProtocolNode2 = new IntObjectCodec(65535);
-        System.out.println(intProtocolNode2.getHexString());
-        System.out.println(Arrays.toString(intProtocolNode2.getBytes()));
-        System.out.println(intProtocolNode2.getValue());
     }
 
 }

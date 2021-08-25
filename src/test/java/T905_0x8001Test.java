@@ -15,7 +15,9 @@ public class T905_0x8001Test {
         byte[] bytes = new byte[2];
         bytes[0] = 1;
         bytes[1] = 2;
-        new UInt16ObjectCodec(bytes);
+        System.out.println(new UInt16ObjectCodec(bytes).getValue());
+        new UInt16ObjectCodec(3);
+
 
         T8001Protocol.Model model = new T8001Protocol.Model();
         model.setResponseMessageId(1);
@@ -68,15 +70,15 @@ public class T905_0x8001Test {
 
         public static class Codec extends PrincipalT905ProtocolCodec<T8001Protocol> {
             public Codec(byte[] bytes) {
-                super(bytes, T8001Protocol.class);
+                super(bytes);
             }
 
             public Codec(String hexString) {
-                super(hexString, T8001Protocol.class);
+                super(hexString);
             }
 
             public Codec(T8001Protocol t8001Protocol) {
-                super(t8001Protocol, T8001Protocol.class);
+                super(t8001Protocol);
             }
         }
 
@@ -118,15 +120,15 @@ public class T905_0x8001Test {
             public static class Codec extends ProtocolCodec<Data> {
 
                 public Codec(byte[] bytes) {
-                    super(bytes, Data.class);
+                    super(bytes);
                 }
 
                 public Codec(String hexString) {
-                    super(hexString, Data.class);
+                    super(hexString);
                 }
 
                 public Codec(Data data) {
-                    super(data, Data.class);
+                    super(data);
                 }
             }
         }

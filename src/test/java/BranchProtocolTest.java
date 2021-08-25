@@ -68,11 +68,11 @@ public class BranchProtocolTest {
 
         public static class Codec extends PrincipalT905ProtocolCodec<TBranchProtocol> {
             public Codec(byte[] bytes) {
-                super(bytes, TBranchProtocol.class);
+                super(bytes);
             }
 
             public Codec(String hexString) {
-                super(hexString, TBranchProtocol.class);
+                super(hexString);
             }
 
             public Codec(TBranchProtocol tBranchProtocol) {
@@ -129,15 +129,15 @@ public class BranchProtocolTest {
             public static class Codec extends ProtocolCodec<Data> {
 
                 public Codec(byte[] bytes) {
-                    super(bytes, Data.class);
+                    super(bytes);
                 }
 
                 public Codec(String hexString) {
-                    super(hexString, Data.class);
+                    super(hexString);
                 }
 
                 public Codec(Data data) {
-                    super(data, Data.class);
+                    super(data);
                 }
             }
         }

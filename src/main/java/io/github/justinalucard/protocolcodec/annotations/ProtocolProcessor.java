@@ -15,5 +15,6 @@ public class ProtocolProcessor extends AbstractProcessor {
 //        Messager messager = processingEnv.getMessager();
 //        messager.printMessage(Diagnostic.Kind.ERROR, "some error");
 //        return true;
+        return false;
     }
 }

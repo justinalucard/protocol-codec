@@ -6,28 +6,18 @@ import io.github.justinalucard.protocolcodec.protocols.CheckSumVerifier;
 
 public class PrincipalLlcProtocolCodec<Principal extends PrincipalLlcProtocol<? extends ProtocolFragment>>  extends ProtocolCodec<Principal> {
     public PrincipalLlcProtocolCodec(byte[] bytes) {
-        this(bytes, null);
+        super(bytes);
     }
 
-    public PrincipalLlcProtocolCodec(byte[] bytes, Class<?> tClass) {
-        super(bytes, tClass);
-    }
 
-    public PrincipalLlcProtocolCodec(String hexString, Class<?> tClass) {
-        super(hexString, tClass);
-    }
-
-    public PrincipalLlcProtocolCodec(Principal principal, Class<?> tClass) {
-        super(principal, tClass);
+    public PrincipalLlcProtocolCodec(String hexString) {
+        super(hexString);
     }
 
     public PrincipalLlcProtocolCodec(Principal principal) {
-        super(principal, principal.getClass());
+        super(principal);
     }
 
-    public PrincipalLlcProtocolCodec(Class<?> tClass) {
-        super(tClass);
-    }
 
     @Override
     protected void afterDeserialize(Principal ret) {

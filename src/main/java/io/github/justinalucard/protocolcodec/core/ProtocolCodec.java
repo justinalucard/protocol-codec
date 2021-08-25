@@ -25,23 +25,23 @@ import java.util.*;
 public abstract class ProtocolCodec<ProtocolData extends ProtocolFragment> extends ObjectCodec<ProtocolData> {
 
 
-    public ProtocolCodec(byte[] bytes, Class<?> tClass) {
-        super(bytes, tClass);
+    public ProtocolCodec(byte[] bytes) {
+        super(bytes);
     }
 
-    public ProtocolCodec(String hexString, Class<?> tClass) {
-        super(hexString, tClass);
+    public ProtocolCodec(String hexString) {
+        super(hexString);
     }
 
 
-    public ProtocolCodec(ProtocolData protocolData, Class<?> tClass) {
-        super(protocolData, tClass);
+    public ProtocolCodec(ProtocolData protocolData) {
+        super(protocolData);
         this.getValue().setBytes(this.getBytes());
     }
 
 
-    public ProtocolCodec(Class<?> tClass) {
-        super(tClass);
+    public ProtocolCodec() {
+        super();
     }
 
 

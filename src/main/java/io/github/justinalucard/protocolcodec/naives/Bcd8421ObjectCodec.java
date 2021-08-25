@@ -8,7 +8,7 @@ import io.github.justinalucard.protocolcodec.core.ProtocolFragment;
  */
 public class Bcd8421ObjectCodec extends ObjectCodec<String> {
     public Bcd8421ObjectCodec(byte[] bytes) {
-        super(bytes, String.class);
+        super(bytes);
     }
 
 
