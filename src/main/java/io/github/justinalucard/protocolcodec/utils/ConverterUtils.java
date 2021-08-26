@@ -48,15 +48,15 @@ public class ConverterUtils {
         return b[off] != 0;
     }
 
-    public static int getUInt16(byte[] b){
+    public static int getUInt16(byte[] b) {
         return getUInt16(b, 0);
     }
 
-    public static long getUInt32(byte[] b){
+    public static long getUInt32(byte[] b) {
         return getUInt32(b, 0);
     }
 
-    public static int getUInt8(byte[] b){
+    public static int getUInt8(byte[] b) {
         return getUInt8(b, 0);
     }
 
@@ -217,6 +217,10 @@ public class ConverterUtils {
 
     }
 
+    public static byte[] getBytes(byte data) {
+        return new byte[]{data};
+    }
+
     /**
      * 以字节数组的形式返回指定的 64 位有符号整数值
      *
@@ -306,7 +310,7 @@ public class ConverterUtils {
     /**
      * 将指定字符串中的所有字符编码为一个字节序列
      *
-     * @param data        包含要编码的字符的字符串
+     * @param data    包含要编码的字符的字符串
      * @param charset 字符集编码
      * @return 一个字节数组，包含对指定的字符集进行编码的结果
      */

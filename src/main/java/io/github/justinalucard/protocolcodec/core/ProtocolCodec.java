@@ -13,7 +13,10 @@ import io.github.justinalucard.protocolcodec.utils.ReflectUtils;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 
 /**
@@ -67,8 +70,13 @@ public abstract class ProtocolCodec<ProtocolData extends ProtocolFragment> exten
                         getBytes().length - byteOffset :
                         getDefinedLength(protocolDefine, lengthFieldLength);
 
+                if(!protocolDefine.getKey().lengthByEndWith().equals(""))
+                    currentLength = Integer.MIN_VALUE;
 
-                byte[] byteSegments = Arrays.copyOfRange(getBytes(), byteOffset, byteOffset + currentLength);
+                byte[] byteSegments;
+                if(currentLength == Integer.MIN_VALUE)
+                    currentLength = getLengthByEndWith(byteOffset, protocolDefine.getKey().lengthByEndWith());
+                byteSegments = Arrays.copyOfRange(getBytes(), byteOffset, byteOffset + currentLength);
 
                 if (protocolDefine.getKey().isBranchRoot()) {
                     currrentBranchNo = new ProtocolFragment(byteSegments).getHexString();
@@ -103,6 +111,19 @@ public abstract class ProtocolCodec<ProtocolData extends ProtocolFragment> exten
     }
 
     /**
+     * 在字节数组中，根据指定特征为结尾，返回该段内容的长度
+     * @param byteOffset 读取开始的偏移量
+     * @param lengthByEndWith 结尾特征
+     * @return 这段内容的长度
+     */
+    private int getLengthByEndWith(int byteOffset, String lengthByEndWith) {
+        byte[] seekBytes = new byte[getBytes().length - byteOffset];
+        System.arraycopy(getBytes(), byteOffset, seekBytes, 0,getBytes().length - byteOffset);
+        String seekHex = BufferUtils.bytesToHex(seekBytes);
+        return (seekHex.indexOf(lengthByEndWith) + lengthByEndWith.length()) / 2;
+    }
+
+    /**
      * 解码后调用，一般用于解码后进行校验位比对验证，这里默认空方法，子类需要的时候，override即可
      *
      * @param protocolData 协议数据体
@@ -134,9 +155,15 @@ public abstract class ProtocolCodec<ProtocolData extends ProtocolFragment> exten
                         fragment.getBytes().length :
                         getDefinedLength(protocolDefine, null);
 
+                if(!protocolDefine.getKey().lengthByEndWith().equals(""))
+                    length = Integer.MIN_VALUE;
+
                 if (protocolDefine.getKey().isBranchNode() &&
                         !protocolDefine.getKey().branchNo().equalsIgnoreCase(currentBranchNo))
                     continue;
+
+                if(length == Integer.MIN_VALUE)
+                    length = fragment.getBytes().length;
 
                 result = BufferUtils.concat(result, BufferUtils.fixLengthPaddingLeft(fragment.getBytes(), length));
 

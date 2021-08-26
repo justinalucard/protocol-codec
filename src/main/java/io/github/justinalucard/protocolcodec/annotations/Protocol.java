@@ -3,8 +3,10 @@ package io.github.justinalucard.protocolcodec.annotations;
 import io.github.justinalucard.protocolcodec.protocols.DeserializeLengthDetermination;
 import io.github.justinalucard.protocolcodec.protocols.SerializeLengthDetermination;
 
-import javax.swing.*;
-import java.lang.annotation.*;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
  * 协议标记用的注解，每个协议组成部分，都必须使用该注解
@@ -68,4 +70,10 @@ public @interface Protocol {
      * @return 分支编号
      */
     String branchNo() default "";
+
+    /**
+     * （动态长度）长度由结束符决定，当遇到该结束符的时候，认为读取完整。
+     * @return 长度结束符
+     */
+    String lengthByEndWith() default "";
 }
