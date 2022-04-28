@@ -45,7 +45,7 @@ public class ProtocolFragment {
     }
 
     public String getHexString() {
-        return hexString.toUpperCase();
+        return hexString != null ? hexString.toUpperCase() : null;
     }
 
     public void setHexString(String hexString) {

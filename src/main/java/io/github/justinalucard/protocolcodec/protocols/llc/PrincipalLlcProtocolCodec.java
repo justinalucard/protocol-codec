@@ -2,7 +2,7 @@ package io.github.justinalucard.protocolcodec.protocols.llc;
 
 import io.github.justinalucard.protocolcodec.core.ProtocolCodec;
 import io.github.justinalucard.protocolcodec.core.ProtocolFragment;
-import io.github.justinalucard.protocolcodec.protocols.CheckSumVerifier;
+import io.github.justinalucard.protocolcodec.utils.CheckSumUtils;
 
 public class PrincipalLlcProtocolCodec<Principal extends PrincipalLlcProtocol<? extends ProtocolFragment>>  extends ProtocolCodec<Principal> {
     public PrincipalLlcProtocolCodec(byte[] bytes) {
@@ -21,6 +21,6 @@ public class PrincipalLlcProtocolCodec<Principal extends PrincipalLlcProtocol<? 
 
     @Override
     protected void afterDeserialize(Principal ret) {
-        CheckSumVerifier.check(ret.getCheck(), ret.getCommand(), ret.getData());
+        CheckSumUtils.lrcCheckThrowable(ret.getCheck(), ret.getCommand(), ret.getData());
     }
 }

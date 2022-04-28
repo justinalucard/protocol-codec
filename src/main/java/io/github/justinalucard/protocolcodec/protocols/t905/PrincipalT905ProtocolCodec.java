@@ -2,7 +2,7 @@ package io.github.justinalucard.protocolcodec.protocols.t905;
 
 import io.github.justinalucard.protocolcodec.core.ProtocolCodec;
 import io.github.justinalucard.protocolcodec.core.ProtocolFragment;
-import io.github.justinalucard.protocolcodec.protocols.CheckSumVerifier;
+import io.github.justinalucard.protocolcodec.utils.CheckSumUtils;
 
 public class PrincipalT905ProtocolCodec<Principal extends PrincipalT905Protocol<? extends ProtocolFragment>>  extends ProtocolCodec<Principal> {
 
@@ -26,6 +26,6 @@ public class PrincipalT905ProtocolCodec<Principal extends PrincipalT905Protocol<
 
     @Override
     protected void afterDeserialize(Principal ret) {
-        CheckSumVerifier.check(ret.getCheck(), ret.getIsuId(), ret.getMessageSerialNo(), ret.getData());
+        CheckSumUtils.lrcCheckThrowable(ret.getCheck(), ret.getIsuId(), ret.getMessageSerialNo(), ret.getData());
     }
 }
