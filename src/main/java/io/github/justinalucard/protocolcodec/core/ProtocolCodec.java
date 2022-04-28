@@ -170,7 +170,7 @@ public abstract class ProtocolCodec<ProtocolData extends ProtocolFragment> exten
             }
             return new ProtocolFragment(result);
         } catch (Exception ex) {
-            throw new SerializationException("协议编码失败，请确认协议定义是否正确，除IsBranchNode=true且未匹配到BranchNo的字段值不能为null", ex);
+            throw new SerializationException("协议编码失败，请确认协议模型Model是否正确，某个字段值为null触发空指针异常，除IsBranchNode=true且未匹配到BranchNo的字段值不能为null", ex);
         }
     }
 

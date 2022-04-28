@@ -66,7 +66,7 @@ public @interface Protocol {
     boolean isBranchNode() default false;
 
     /**
-     * 分支编号，该int值与上一个{@link #isBranchRoot()}注解标记的字段值的十六进制结果进行比对，一致的将进行解析
+     * 分支编号，该值与上一个{@link #isBranchRoot()}注解标记的字段值的十六进制结果进行比对，一致的将进行解析
      * @return 分支编号
      */
     String branchNo() default "";
