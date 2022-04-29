@@ -2,6 +2,7 @@ import io.github.justinalucard.protocolcodec.annotations.Protocol;
 import io.github.justinalucard.protocolcodec.core.AutoMapperProtocolData;
 import io.github.justinalucard.protocolcodec.core.ProtocolCodec;
 import io.github.justinalucard.protocolcodec.exceptions.SerializationException;
+import io.github.justinalucard.protocolcodec.naives.AsciiStringObjectCodec;
 import io.github.justinalucard.protocolcodec.naives.Bcd8421ObjectCodec;
 import io.github.justinalucard.protocolcodec.naives.UInt16ObjectCodec;
 import io.github.justinalucard.protocolcodec.naives.UInt8ObjectCodec;
@@ -31,10 +32,16 @@ public class EndWithProtocolTest2 {
         model.setUpgradeServerAddress("www.taobao.com");
         model.setUpgradeServerPort(8080);
 
-        Assert.assertThrows(SerializationException.class, () ->{
+        Assert.assertThrows(SerializationException.class, () -> {
             EndWithProtocol.create("101234567890", 0xFFFF, model);
         });
 
+    }
+
+    @Test
+    public void testASCII() {
+        AsciiStringObjectCodec codec = new AsciiStringObjectCodec("AA0000");
+        System.out.println(codec);
     }
 
 
@@ -52,7 +59,7 @@ public class EndWithProtocolTest2 {
             super(hexString);
         }
 
-        public static Codec  create(String isuId, int messageSerialNo, Model model){
+        public static Codec create(String isuId, int messageSerialNo, Model model) {
             Data data = new Data(model);
             Data.Codec dataCodec = new Data.Codec(data);
             EndWithProtocol endWithProtocol = new EndWithProtocol(isuId, messageSerialNo, dataCodec);
@@ -76,7 +83,7 @@ public class EndWithProtocolTest2 {
 
         public static class Data extends AutoMapperProtocolData<Model> {
 
-            public Data(Model model){
+            public Data(Model model) {
                 super(model);
             }
 
