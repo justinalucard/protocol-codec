@@ -34,7 +34,7 @@ public class StringObjectCodec extends ObjectCodec<String> {
         }
     }
 
-    Charset charset;
+    private Charset charset;
 
     @Override
     protected String deserialize() {
