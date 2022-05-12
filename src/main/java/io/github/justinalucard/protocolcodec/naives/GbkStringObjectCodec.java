@@ -15,7 +15,11 @@ public class GbkStringObjectCodec extends StringObjectCodec {
     }
 
     public GbkStringObjectCodec(String s, boolean hexString) {
-        super(s, Charset.forName("GBK"), hexString);
+        super(s, hexString);
     }
 
+    @Override
+    protected Charset getCharset() {
+        return Charset.forName("GBK");
+    }
 }

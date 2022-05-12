@@ -13,18 +13,14 @@ public class StringObjectCodec extends ObjectCodec<String> {
         super(bytes);
     }
 
+
     /**
      * 隐藏了hexString的构造函数，对于字符串类的初始化直接使用字符串本身的值（而非hexString）进行构造。
      * 如果调试协议，可以使用{@link StringObjectCodec#StringObjectCodec(byte[])}进行测试
-     * @param value 原始的字符串
+     * @param s 原始的字符串
      */
-    public StringObjectCodec(String value, Charset charset) {
-        this(value, charset,false);
-    }
-
-    public StringObjectCodec(String s, Charset charset, boolean hexString) {
+    public StringObjectCodec(String s, boolean hexString) {
         super();
-        this.charset = charset;
         fromValue(s);
         if(hexString){
             this.setHexString(s);
@@ -34,15 +30,17 @@ public class StringObjectCodec extends ObjectCodec<String> {
         }
     }
 
-    private Charset charset;
+    protected Charset getCharset(){
+        return Charset.defaultCharset();
+    }
 
     @Override
     protected String deserialize() {
-        return new String(this.getBytes(), charset);
+        return new String(this.getBytes(), getCharset());
     }
 
     @Override
     protected ProtocolFragment serialize() {
-        return new ProtocolFragment(this.getValue().getBytes(charset));
+        return new ProtocolFragment(this.getValue().getBytes(getCharset()));
     }
 }

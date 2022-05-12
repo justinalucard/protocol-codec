@@ -3,7 +3,6 @@ package io.github.justinalucard.protocolcodec.protocols.t905.codecs;
 import io.github.justinalucard.protocolcodec.core.ProtocolFragment;
 import io.github.justinalucard.protocolcodec.naives.GbkStringObjectCodec;
 
-import java.nio.charset.Charset;
 import java.util.Arrays;
 
 /**
@@ -28,12 +27,12 @@ public class GbkString0x00ObjectCodec extends GbkStringObjectCodec {
         if(this.getBytes().length > 0) {
             newBytes = Arrays.copyOf(this.getBytes(), this.getBytes().length - 1);
         }
-        return new String(newBytes, Charset.forName("GBK"));
+        return new String(newBytes, getCharset());
     }
 
     @Override
     protected ProtocolFragment serialize() {
-        byte[] bytes = this.getValue().getBytes(Charset.forName("GBK"));
+        byte[] bytes = this.getValue().getBytes(getCharset());
         bytes = Arrays.copyOf(bytes, bytes.length + 1);
         return new ProtocolFragment(bytes);
     }

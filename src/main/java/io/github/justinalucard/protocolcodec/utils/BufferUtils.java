@@ -19,6 +19,22 @@ public class BufferUtils {
 
     }
 
+    /**
+     * 将传入的字节数组，按照指定长度，后方补0
+     * @param bytes 需要修正的字节数组
+     * @param length 修正后的长度
+     * @return 修正过的字节结果
+     */
+    public static byte[] fixLengthPaddingRight(byte[] bytes, int length) {
+        byte[] ret = new byte[length];
+        if (length - bytes.length >= 0)
+            System.arraycopy(bytes, 0, ret, 0, bytes.length);
+        else
+            System.arraycopy(bytes, 0, ret, 0, length);
+        return ret;
+
+    }
+
 
 
     /**

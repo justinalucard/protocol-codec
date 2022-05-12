@@ -1,5 +1,6 @@
 package io.github.justinalucard.protocolcodec.naives;
 
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
 /**
@@ -15,8 +16,13 @@ public class AsciiStringObjectCodec extends StringObjectCodec {
         this(value, false);
     }
 
+    @Override
+    protected Charset getCharset() {
+        return StandardCharsets.US_ASCII;
+    }
+
     public AsciiStringObjectCodec(String s, boolean hexString) {
-        super(s, StandardCharsets.US_ASCII, hexString);
+        super(s, hexString);
     }
 
 }

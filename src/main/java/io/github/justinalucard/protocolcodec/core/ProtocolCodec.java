@@ -165,7 +165,10 @@ public abstract class ProtocolCodec<ProtocolData extends ProtocolFragment> exten
                 if(length == Integer.MIN_VALUE)
                     length = fragment.getBytes().length;
 
-                result = BufferUtils.concat(result, BufferUtils.fixLengthPaddingLeft(fragment.getBytes(), length));
+
+                result = BufferUtils.concat(result, protocolDefine.getKey().padding() == Protocol.Padding.LEFT ?
+                                BufferUtils.fixLengthPaddingLeft(fragment.getBytes(), length) :
+                                BufferUtils.fixLengthPaddingRight(fragment.getBytes(), length));
 
             }
             return new ProtocolFragment(result);

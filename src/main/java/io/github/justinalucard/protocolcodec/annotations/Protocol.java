@@ -76,4 +76,24 @@ public @interface Protocol {
      * @return 长度结束符
      */
     String lengthByEndWith() default "";
+
+    /**
+     * 填充方式
+     * @return 左补0还是右补0
+     */
+    Padding padding() default Padding.LEFT;
+
+    /**
+     * 填充方式
+     */
+    enum Padding{
+        /**
+         * 左补0
+         */
+        LEFT,
+        /**
+         * 右补0
+         */
+        RIGHT
+    }
 }
