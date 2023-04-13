@@ -8,6 +8,6 @@ import io.github.justinalucard.protocolcodec.protocols.SerializeLengthDeterminat
  */
 public class T905SerializeRequestDataLengthCalculator implements SerializeLengthDetermination {
     public int getLength(LengthField lengthField) {
-        return lengthField.getLength().getValue() - 8;
+        return lengthField.getLength().getValue();
     }
 }

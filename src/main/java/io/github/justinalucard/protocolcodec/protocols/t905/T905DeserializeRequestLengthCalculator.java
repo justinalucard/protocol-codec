@@ -7,6 +7,6 @@ import io.github.justinalucard.protocolcodec.protocols.DeserializeLengthDetermin
  */
 public class T905DeserializeRequestLengthCalculator implements DeserializeLengthDetermination {
     public int getLength(int length) {
-        return length - 8;
+        return length;
     }
 }

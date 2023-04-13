@@ -26,6 +26,6 @@ public class PrincipalT905ProtocolCodec<Principal extends PrincipalT905Protocol<
 
     @Override
     protected void afterDeserialize(Principal ret) {
-        CheckSumUtils.lrcCheckThrowable(ret.getCheck(), ret.getIsuId(), ret.getMessageSerialNo(), ret.getData());
+        CheckSumUtils.xorCheckThrowable(ret.getCheck(), ret.getMessageId(), ret.getLength(), ret.getIsuId(), ret.getMessageSerialNo(), ret.getData());
     }
 }

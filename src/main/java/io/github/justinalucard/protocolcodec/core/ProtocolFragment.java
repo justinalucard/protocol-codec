@@ -3,6 +3,7 @@ package io.github.justinalucard.protocolcodec.core;
 
 import io.github.justinalucard.protocolcodec.utils.BufferUtils;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -10,7 +11,7 @@ import java.util.Objects;
  * 万物皆object，在协议解析框架里，万物皆ProtocolFragment。
  * 提供了字节流与十六进制字符串的双向绑定转换功能。
  */
-public class ProtocolFragment {
+public class ProtocolFragment implements Serializable {
     private byte[] bytes;
     private String hexString;
 

@@ -25,7 +25,8 @@ public class CheckSumUtils {
 
     /**
      * LRC校验检查
-     * @param check 待检查的校验位
+     *
+     * @param check             待检查的校验位
      * @param protocolFragments 参与校验计算的因子
      */
     public static void lrcCheckThrowable(ProtocolFragment check, ProtocolFragment... protocolFragments) {
@@ -43,17 +44,10 @@ public class CheckSumUtils {
      */
     public static ProtocolFragment xor(ProtocolFragment... protocolFragments) {
         if (protocolFragments != null && protocolFragments.length > 0) {
-
-            boolean flag = false;
             byte b = 0;
             for (ProtocolFragment protocolFragment : protocolFragments) {
                 for (byte aByte : protocolFragment.getBytes()) {
-                    if (!flag) {
-                        b = aByte;
-                        flag = true;
-                    } else
-                        b ^= aByte;
-
+                    b ^= aByte;
                 }
             }
             return new ProtocolFragment(new byte[]{b});
@@ -64,7 +58,8 @@ public class CheckSumUtils {
 
     /**
      * XOR校验检查
-     * @param check 待检查的校验位
+     *
+     * @param check             待检查的校验位
      * @param protocolFragments 参与校验计算的因子
      */
     public static void xorCheckThrowable(ProtocolFragment check, ProtocolFragment... protocolFragments) {

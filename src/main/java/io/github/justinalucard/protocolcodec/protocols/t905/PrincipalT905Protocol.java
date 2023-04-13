@@ -60,11 +60,13 @@ public class PrincipalT905Protocol<DataCodec extends  ProtocolFragment> extends 
 
     public PrincipalT905Protocol(int messageId, String isuId, int messageSerialNo, DataCodec codec) {
         this.messageId = new UInt16ObjectCodec(messageId);
+        if(isuId.length()!=12)
+            throw new RuntimeException("905 2014版协议中，isuid长度包含厂商标识必须为12位");
         this.isuId = new Bcd8421ObjectCodec(isuId);
         this.messageSerialNo = new UInt16ObjectCodec(messageSerialNo);
         this.data = codec;
-        this.length = new UInt16ObjectCodec(getIsuId().getBytes().length + getMessageSerialNo().getBytes().length + getData().getBytes().length);
-        this.check = CheckSumUtils.lrc(getIsuId(), getMessageSerialNo(), getData());
+        this.length = new UInt16ObjectCodec(getData().getBytes().length);
+        this.check = CheckSumUtils.xor(getMessageId(), getLength(), getIsuId(), getMessageSerialNo(), getData());
     }
 
 
