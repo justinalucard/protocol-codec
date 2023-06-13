@@ -6,7 +6,7 @@ import io.github.justinalucard.protocolcodec.naives.GbkStringObjectCodec;
 import java.util.Arrays;
 
 /**
- * GBK结尾补0x00字符串编码器
+ * GBK结尾补结束符0x00字符串编码器
  */
 public class GbkString0x00ObjectCodec extends GbkStringObjectCodec {
     public GbkString0x00ObjectCodec(byte[] bytes) {

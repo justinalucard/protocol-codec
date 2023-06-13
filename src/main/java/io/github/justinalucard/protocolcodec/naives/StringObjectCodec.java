@@ -21,12 +21,12 @@ public class StringObjectCodec extends ObjectCodec<String> {
      */
     public StringObjectCodec(String s, boolean hexString) {
         super();
-        fromValue(s);
+
         if(hexString){
-            this.setHexString(s);
+            fromHexString(s);
         }
         else{
-            this.setValue(s);
+            fromValue(s);
         }
     }
 
